@@ -1,0 +1,4 @@
+ Pillow
+ pyproj
+ mapnik
+ django
