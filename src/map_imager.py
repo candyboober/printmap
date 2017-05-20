@@ -263,3 +263,7 @@ def select_map_image(name):
                 '2gis': TwoGisMapImager,
                 'osm': OSMMapImager}
     return map_hash[name]
+
+def create_map_image(map_lay):
+    map_lay.render_map()
+    return PIL.Image.open(map_lay.map_tmp_file.name)

@@ -3,7 +3,7 @@ from cStringIO import StringIO
 import PIL
 
 
-def concat_images(image, layer, rosreestr):
+def concat_images(image, layer, rosreestr=None):
     """
     function that concat png images like sandwich
     used for concat google map static image and
@@ -12,10 +12,9 @@ def concat_images(image, layer, rosreestr):
     layer - png mapnik image
     """
     buf = StringIO()
-    img = None
     if rosreestr:
         rosreestr = rosreestr.resize(image.size)
-        img = PIL.Image.alpha_composite(image, rosreestr)
-    PIL.Image.alpha_composite(img or image, layer).save(buf, 'PNG')
+        image = PIL.Image.alpha_composite(image, rosreestr)
+    PIL.Image.alpha_composite(image, layer).save(buf, 'PNG')
     buf.seek(0)
     return buf

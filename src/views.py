@@ -4,7 +4,7 @@ from django.views.generic import View
 
 import json
 
-from .map_imager import select_map_image, RosreestrImager
+from .map_imager import select_map_image, create_map_image, RosreestrImager
 from .map_filler import MapFiller
 from . import utils
 from .concat import concat_images
@@ -32,9 +32,9 @@ class PrintLayView(View):
 
     def valid_data(self):
         if 'layersProps' not in self.data:
-            return HttpResponse('Data is not a valid')
+            return HttpResponse('Data is not a valid, need `layersProps`')
         if 'mapName' not in self.data:
-            return HttpResponse('Data is not a valid')
+            return HttpResponse('Data is not a valid, need `mapName`')
 
     def unpack_data(self):
         self.layers_props = json.loads(self.data['layersProps'])
@@ -67,4 +67,4 @@ class PrintLayView(View):
         Map = MapFiller(self.imager)
         Map.filling_map(layers)
         Map.zoom_to_layers_box()
-        self.lay = Map.create_map_image()
+        self.lay = create_map_image(Map)
